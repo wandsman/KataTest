@@ -155,6 +155,7 @@ func makeAction(src []string) (res string, err error) {
 }
 
 func main() {
+	var result string
 	reader := bufio.NewReader(os.Stdin)
 	dumpStr, err := reader.ReadString('\n')
 	if err != nil {
@@ -168,7 +169,13 @@ func main() {
 		log.Fatal(err)
 
 	} else {
-		fmt.Println(makeAction(splitStr))
+		result, err = makeAction(splitStr)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println(result)
+		}
+
 	}
 
 }
