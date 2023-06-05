@@ -38,11 +38,10 @@ var (
 /*
 Проверка строки на правильность
 */
-func isValid(tmp []string) (err error) {
-	var tmpNum int
+func isValid(tmp []string) error {
 	arabic, rom := false, false
 	if len(tmp) != 3 {
-		err = errors.New("too many arguments")
+		return errors.New("too many arguments")
 	} else {
 		for idx, elem := range tmp {
 			if idx != 1 {
@@ -51,18 +50,16 @@ func isValid(tmp []string) (err error) {
 					rom = true
 				} else if !ok {
 					arabic = true
-					tmpNum, err = strconv.Atoi(elem)
+					tmpNum, err := strconv.Atoi(elem)
 					if err != nil {
-						err = errors.New(fmt.Sprintf("this character is not valid %s", elem))
-						break
+						return errors.New(fmt.Sprintf("this character is not valid %s", elem))
 					}
 					if tmpNum > 10 || tmpNum < 0 {
-						err = errors.New(fmt.Sprintf("num %v is not valid", elem))
-						break
+						return errors.New(fmt.Sprintf("num %v is not valid", elem))
 					}
 				}
 				if rom && arabic {
-					err = errors.New("different number systems are used simultaneously")
+					return errors.New("different number systems are used simultaneously")
 				}
 			} else {
 				switch elem {
@@ -72,13 +69,12 @@ func isValid(tmp []string) (err error) {
 				case "/":
 					break
 				default:
-					err = errors.New(fmt.Sprintf("this character is not valid %s", elem))
-					break
+					return errors.New(fmt.Sprintf("this character is not valid %s", elem))
 				}
 			}
 		}
 	}
-	return err
+	return nil
 }
 
 /*
@@ -175,7 +171,5 @@ func main() {
 		} else {
 			fmt.Println(result)
 		}
-
 	}
-
 }
