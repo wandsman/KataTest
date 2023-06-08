@@ -94,6 +94,7 @@ func makeRom(num int) (res string, err error) {
 			}
 		}
 		num /= 10
+		counter *= 10
 	}
 	for i := len(buff) - 1; i >= 0; i-- {
 		res += buff[i]
